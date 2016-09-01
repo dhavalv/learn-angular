@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>How to use angular directives</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <style>
+    .img-thumbnail{
+      max-height: 100px;
+      padding: 2px;
+    }
+    form .help-block{
+     color: lightcoral !important;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular</a>
+    </div>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <form name="myFormNg" novalidate ng-submit="myForm.saveData()">
+        <div class="form-group">
+          <label for="">Full Name</label>
+          <input type="text" name="name" class="form-control" ng-model="myForm.name" ng-minlength="3" autocomplete="off" ng-maxlength=5 required>
+          <div ng-show="myFormNg.$submitted || myFormNg.name.$touched">
+              <span class="help-block" ng-show="myFormNg.name.$error.required">Please enter your full name</span>
+              <span class="help-block" ng-show="myFormNg.name.$error.minlength">Minimum 3 character required.</span>
+              <span class="help-block" ng-show="myFormNg.name.$error.maxlength">Minimum 5 character required.</span>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="">E-mail</label>
+            <input type="email" class="form-control" name="email" ng-model="myForm.email" required>
+            <div ng-show="myFormNg.$submitted || myFormNg.email.$touched">
+              <span class="help-block" ng-show="myFormNg.email.$error.required">Please enter your email</span>
+              <span class="help-block" ng-show="myFormNg.email.$error.email">Please enter valid email</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Username</label>
+            <input type="text" class="form-control" name="username" ng-model="myForm.username" required ng-pattern="/^\d+$/">
+            <div ng-show="myFormNg.$submitted || myFormNg.username.$touched">
+              <span class="help-block" ng-show="myFormNg.username.$error.required">Please enter your username</span>
+              <span class="help-block" ng-show="myFormNg.username.$error.pattern">Invalid Format</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Password</label>
+            <input type="text" class="form-control" name="password" ng-model="myForm.password" required>
+            <div ng-show="myFormNg.$submitted || myFormNg.password.$touched">
+              <span class="help-block" ng-show="myFormNg.password.$error.required">Please enter your password</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Confirm Password</label>
+            <input type="text" class="form-control" name="confirm_password" ng-model="myForm.confirm_password" required>
+            <div ng-show="myFormNg.$submitted || myFormNg.confirm_password.$touched">
+              <span class="help-block" ng-show="myFormNg.confirm_password.$error.required">Please enter your password</span>
+              <span class="help-block" ng-show="myForm.confirm_password !== myForm.password">Password does not match</span>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label>Favorite Colors</label>
+            <div class="checkbox checkbox-inline">
+              <label ng-repeat="color in myForm.colors">
+                  <input type="checkbox" name="colors" ng-model="color.checked" ng-click = "myForm.countCheck(color)">{{color.name}}
+              </label>
+              <span class="help-block error" ng-show="myForm.colorCount == 0">Please check one color at least</span>
+            </div>
+
+        </div> -->
+        <div class="form-group">
+            <label for="">Are you married?</label>
+            <div class="radio radio-inline">
+               <label><input type="radio" name="marital_status" value="single" ng-model="myForm.MaritalStatus.value1"> Single</label>
+              <label><input type="radio" name="marital_status" value="married" ng-model="myForm.MaritalStatus.value2" value="Married"> Married</label>
+            </div>
+            <div ng-show="myFormNg.$submitted">
+              <span class="help-block" ng-show="!myFormNg.marital_status">Checked marital status</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="">Hobbies</label>
+            <div class="checkbox checkbox-inline">
+              <label><input type="checkbox" name="hobbies" ng-model="myForm.hobbies.value1"> Cricket</label>
+              <label><input type="checkbox" name="hobbies" ng-model="myForm.hobbies.value2"> Listening Music</label>
+              <label><input type="checkbox" name="hobbies" ng-model="myForm.hobbies.value3"> Listening Music</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Status</label>
+            <select class="form-control" ng-model='myForm.status' ng-options="obj.id as obj.name for obj in myForm.options" name="status"></select>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary"  ng-disabled="myFormNg.$invalid">
+        </div>
+      </form>
+      </div>
+  </div>
+</div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('myAppController',['$scope','$http',function($scope,$http){
+    $scope.myForm = {};
+    $scope.myForm.name = '';
+    $scope.myForm.email = '';
+    $scope.myForm.username = '';
+    $scope.myForm.password = '';
+    $scope.myForm.confirm_password = '';
+    $scope.myForm.gender = 'm';
+    $scope.myForm.hobbies = {
+      value1:'Cricket',
+      value2:'Listening Music',
+      value3:'Reading Books'
+    };
+    $scope.myForm.colors = [{
+        'id':'1',
+        'name':'red'
+    },{
+        'id':'2',
+        'name':'green'
+    },{
+        'id':'3',
+        'name':'blue'
+    }];
+    $scope.myForm.colorCount = 0;
+    $scope.myForm.countCheck = function(color){
+      if(color.checked){
+        $scope.myForm.colorCount--;//opposite
+      }else{
+        $scope.myForm.colorCount++;
+      }
+    };
+    $scope.myForm.MaritalStatus = {value1:'Single'};
+
+    $scope.myForm.status  = 0;
+    //for Multiselect
+    //$scope.myForm.status  = [0,1];
+    $scope.myForm.options = [
+      { id : 0, name: "De-activate" }
+     ,{ id : 1, name: "Active" }
+     ,{ id : 2, name: "Suspend" }
+     ];
+
+    $scope.myForm.saveData = function(){
+      console.log($scope);
+    }
+}]);
+</script>
+</body>
+</html>

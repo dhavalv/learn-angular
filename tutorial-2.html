@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Ajax Example</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <style>
+    .img-thumbnail{
+      max-height: 100px;
+      padding: 2px;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular</a>
+    </div>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+  <div class="row">
+    <button ng-click="myData.doClick(item, $event)">Send AJAX Request</button>
+    <ul class="list-group">
+      <li ng-repeat="item in myData.fromServer" class="list-group-item">
+        <img src="{{ item.avatar }}" alt="{{ item.name }}">
+      </li>
+    </ul>
+  </div>
+</div>
+<script src="bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+//we need to require for $http service for request to server
+myApp.controller('myAppController',['$scope','$http',function($scope,$http){
+    $scope.myData = {};
+    $scope.myData.fromServer = '';
+    $scope.myData.doClick = function(item,event){
+      //nodeJs json-server url run from angular project
+      $http.get('http://localhost:3000/people')
+      .success(function(results){
+        $scope.myData.fromServer = results;
+        console.log(results);
+      })
+      .error(function(data,error) {
+
+      });
+    }
+}]);
+</script>
+</body>
+</html>

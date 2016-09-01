@@ -1,0 +1,17 @@
+{
+  "name": "learn-angular-1",
+  "authors": [
+    "Dhaval Varsada <dhaval.v@tasolglobal.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

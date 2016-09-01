@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>How to use angular directives</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <style>
+    .img-thumbnail{
+      max-height: 100px;
+      padding: 2px;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular</a>
+    </div>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+  <div class="row">
+    <input type="text" ng-model="name">
+    <div class="alert" ng-class="{'alert-danger' : name.length < length,'alert-success': name.length === length,'alert-warning': name.length > length}">You must be enter 5 character.</div>
+  </div>
+  <small>Displaying on 3 character from input text</small>
+  <h3>{{ name | limitTo:3 }}</h3>
+  <div class="row" ng-show="name.length !== length">
+    <div class="jumbotron">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis consequatur, inventore assumenda laborum id, modi cupiditate alias ab soluta sequi dolor odit repellendus officia nobis dolore quidem iure mollitia. Laborum voluptate libero exercitationem, iusto soluta! Natus, temporibus, voluptas. Quidem rem necessitatibus qui cum adipisci ea consectetur consequatur, alias numquam dignissimos.</p>
+    </div>
+  </div>
+  <div class="row">
+    <button ng-click="hideShowDiv()">Hide/Show</button><hr>
+    <div class="jumbotron" ng-show="hideDiv">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis consequatur, inventore assumenda laborum id, modi cupiditate alias ab soluta sequi dolor odit repellendus officia nobis dolore quidem iure mollitia. Laborum voluptate libero exercitationem, iusto soluta! Natus, temporibus, voluptas. Quidem rem necessitatibus qui cum adipisci ea consectetur consequatur, alias numquam dignissimos.</p>
+    </div>
+  </div>
+  <div class="row">
+    <ul>
+      <li ng-repeat="rule in rules.name" ng-class="{{ '{'+rule+'}' }}"></li>
+    </ul>
+  </div>
+  <button ng-click="loadJson()">Click and load json</button>
+  <table class="table table-striped" ng-cloak>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Description</th>
+      <th>Forks</th>
+      <th>Star</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>Keywords</th>
+    </tr>
+    <tr ng-repeat="moduleObj in results">
+      <td><a href="{{ moduleObj.website }}">{{ moduleObj.name }}</a></td>
+      <td>{{ moduleObj.owner }}</td>
+      <td>{{ moduleObj.description }}</td>
+      <td>{{ moduleObj.forks }}</td>
+      <td>{{ moduleObj.star }}</td>
+      <td>{{ moduleObj.created }}</td>
+      <td>{{ moduleObj.updated }}</td>
+      <td>{{ moduleObj.keywords }}</td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+<script src="bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+
+myApp.controller('myAppController',['$scope','$http',function($scope,$http){
+      $scope.length = 5;
+      $scope.hideDiv = true;
+      $scope.name = '';
+      $scope.hideShowDiv = function(){
+        $scope.hideDiv = !$scope.hideDiv;
+        console.log(!$scope.hideDiv);
+      };
+      $scope.results = [];
+      $scope.url = 'http://s3-us-west-2.amazonaws.com/asf-addon/list.json';
+      $scope.loadJson = function(){
+        $http.get($scope.url).success(function(results){
+          $scope.results = results;
+        }).error(function(data,error) {
+          /* Act on the event */
+          console.log(error);
+        });
+      }
+}]);
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>My Angular App</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+    <div class="row code-block">
+        <h4>Tutorial:1</h4>
+    </div>
+    <div class="row">
+        <form>
+           <div class="form-group">
+               <label for=""><input type="text" ng-model="firstname"></label>
+           </div>
+        </form>
+    </div>
+    <div class="row">
+        <span>{{ name | uppercase }}</span>
+        <ul class="list-unstyled">
+            <li ng-repeat="x in names | orderBy:'name'">{{ x.name }}</li>
+        </ul>
+    </div>
+    <div class="row">
+        <li ng-repeat="x in arrNames">
+            {{x | myFormat}}
+        </li>
+    </div>
+</div>
+<script src="bower_components/angular/angular.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

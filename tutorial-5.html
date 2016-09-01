@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Rendering</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">Angular</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#/">Home</a></li>
+      <li><a href="#page1">Page 1</a></li>
+      <li><a href="#page2">Page 2</a></li>
+      <li><a href="#page3">Page 3</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#login">Login</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+  <ng-view></ng-view>
+</div>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',['ngRoute']);
+myApp.config(['$routeProvider',function($routeProvider){
+  $routeProvider
+    .when('/',{
+      'template': '<h1>HomePage</h1>'
+    })
+    .when('/page1',{
+      'template': '<h1>Page1</h1>'
+    })
+    .when('/page2',{
+      'template': '<h1>Page2</h1>'
+    })
+    .when('/page3',{
+      'template': '<h1>Page3</h1>'
+    })
+    .when('/login',{
+      'template': '<h1>Login</h1>'
+    })
+    .otherwise({
+      'template': '<h1 class="text-danger">Not found</h1>'
+    })
+}]);
+myApp.controller('myAppController',['$scope',function($scope){
+
+}]);
+</script>
+</body>
+</html>

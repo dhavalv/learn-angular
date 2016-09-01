@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="loginApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Template Rendering</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">Angular</a>
+    </div>
+    <!-- <ul class="nav navbar-nav">
+      <li class="active"><a href="#/">Home</a></li>
+      <li><a href="#page1">Page 1</a></li>
+      <li><a href="#page2">Page 2</a></li>
+      <li><a href="#page3">Page 3</a></li>
+    </ul> -->
+    <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#/">Login</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <ng-view></ng-view>
+</div>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<!-- Main App Js and routes defines to app.js -->
+<script type="text/javascript" src="app.js"></script>
+<!-- Include directives Js -->
+<script type="text/javascript" src="directives/loginDirective.js"></script>
+<!-- Include controller Js -->
+<script type="text/javascript" src="controllers/loginController.js"></script>
+<script type="text/javascript" src="controllers/HomeController.js"></script>
+<!-- Include service Js -->
+<script type="text/javascript" src="services/loginService.js"></script>
+<script type="text/javascript" src="services/sessionService.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>My Angular App</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular</a>
+    </div>
+  </div>
+</nav>
+<div class="container" ng-controller="myAppController">
+  <div class="row">
+    <label for="">Name:</label>
+    <input type="text" ng-model="handle">
+    <input type="text" ng-keypress="myData.changeName(item,$event)">
+  </div>
+  <div class="row">
+    <ul class="list-unstyled">
+      <li ng-repeat="item in myData.items">
+        <button ng-click="myData.doClick(item,$event)">Click Here!</button>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    {{data.time}}
+
+    <br/>
+    <button ng-click="updateTime()">update time - ng-click</button>
+    <button id="updateTimeButton"  >update time</button>
+  </div>
+  <!-- <h1>{{ 'Hello ' + handle + ' !' }}</h1> -->
+</div>
+<script src="bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+myApp.controller('myAppController',['$scope','$timeout',function($scope,$timeout){
+  //bind ng-model
+  $scope.handle = 'World';
+  $scope.customInp = '';
+  //after 3 seconds, ng-model value is updated under scope of myAppController
+  /*$timeout(function(){
+    $scope.handle = 'Steve';
+  },3000)*/
+  /*Event Example Start*/
+  $scope.myData = {};
+  $scope.myData.items = [{ v: "1"}, { v: "2"}, { v : "3"} ];
+  //keypress event
+  $scope.myData.changeName = function($scope,event){
+    console.log('Keypressed!');
+    console.log(event);
+  };
+  //click event and bind params in click function
+  $scope.myData.doClick = function($scope,event){
+    console.log($scope.v);
+  }
+  /*Event Example End*/
+  /* $watch , $digest and $apply when angular binds view to model, angular watch on process*/
+  $scope.$watch(function(scope) {
+    return scope.handle
+  },
+    function(newValue, oldValue) {
+      console.log('old value = ' + oldValue);
+      console.log('new value = ' + newValue);
+      console.log('--------------------------------');
+      //document.getElementById("").innerHTML = "" + newValue + "";
+    }
+  );
+  /*$apply example*/
+  $scope.data = { time : new Date() };
+
+  $scope.updateTime = function() {
+      $scope.data.time = new Date();
+  }
+  // $scope.data.time value does not update in view part
+  document.getElementById("updateTimeButton")
+          .addEventListener('click', function() {
+      console.log("update time clicked");
+      $scope.$apply(function(){
+        $scope.data.time = new Date();
+      });
+      //Remove below comment and update your time in view
+      //$scope.$digest();
+  });
+
+}]);
+</script>
+</body>
+</html>

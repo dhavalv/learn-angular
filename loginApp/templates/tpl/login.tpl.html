@@ -1,0 +1,24 @@
+<div class="col-md-offset-3 col-md-6">
+        <form name="loginForm" ng-submit="login(user)">
+            <div class="form-group">
+                <label for="">Email</label>
+                <input type="email" class="form-control" ng-model="user.mail" name="inputEmail" required>
+                <div ng-show="loginForm.$submitted || loginForm.inputEmail.$touched">
+                    <span class="text-danger" ng-show="loginForm.inputEmail.$error.required">Please enter your email address</span>
+                    <span class="text-danger" ng-show="loginForm.inputEmail.$error.email">Please enter your valid email address</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" class="form-control" ng-model="user.pass" name="inputPassword" required ng-minlength="6">
+                <div ng-show="loginForm.$submitted || loginForm.inputPassword.$touched">
+                    <span class="text-danger" ng-show="loginForm.inputPassword.$error.required">Please enter your password</span>
+                    <span class="text-danger" ng-show="loginForm.inputPassword.$error.minlength">Enter 6 characters password</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" ng-disabled="loginForm.$invalid" class="btn btn-primary">
+            </div>
+            <p>{{ login_message }}</p>
+        </form>
+    </div>
